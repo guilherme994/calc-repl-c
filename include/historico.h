@@ -17,7 +17,7 @@ typedef struct {
 } Historico;
 
 void iniciar();
-void adicionar_historico();
+void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, char* operador); 
 void imprimir_historico();
 
 #endif
