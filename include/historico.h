@@ -10,14 +10,13 @@ typedef struct {
 	int resultado;
 } Operacao;
 
-
 typedef struct {
 	Operacao entradas[HISTORICO_MAX];
 	int total;
 } Historico;
 
-void iniciar();
+void iniciar(Historico* historico);
 void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, char* operador); 
-void imprimir_historico();
+void imprimir_historico(Historico* historico);
 
 #endif

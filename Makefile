@@ -2,9 +2,9 @@ CC := gcc
 CFLAGS := -Wall -Wextra -std=c11
 SRCDIR := src
 
-calc: ./src/main.o	./src/parser.o	./src/operacoes.o
-	$(CC) $(CFLAGS) ./src/main.o ./src/parser.o ./src/operacoes.o -o $@
-main.o:	./src/main.c	./include/parser.h	./include/operacoes.h
+calc: ./src/main.o	./src/parser.o	./src/operacoes.o	./src/historico.o
+	$(CC) $(CFLAGS) ./src/main.o ./src/parser.o ./src/operacoes.o ./src/historico.o -o $@
+main.o:	./src/main.c	./include/parser.h	./include/operacoes.h	./include/historico.h
 	$(CC) $(CFLAGS) -c ./src/main.c 
 parser.o:	./include/parser.h	./src/parser.c
 	$(CC) $(CFLAGS) -c ./src/parser.c

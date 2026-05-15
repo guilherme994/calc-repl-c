@@ -2,28 +2,18 @@
 #include <string.h>
 #include "../include/parser.h"
 
-int parser(char* text, int* n_1, int* n_2, char* ope) {
+void parser(char* text, char* num_1, char* num_2, char* ope) {
   char* token = strtok(text, " \t\n");
-  char num_1[20], num_2[20], op[20];
   int contador = 0;
 
   while(token != NULL) {
     if(contador == 0) strcpy(num_1, token);
-    else if(contador == 1) strcpy(op, token);
+    else if(contador == 1) strcpy(ope, token);
     else if(contador == 2) strcpy(num_2, token);
-
     token = strtok(NULL, " ");
     contador ++;
   }
-
-  if(!strcmp(num_1, "q")) return 1;
-  
-  parser_operator(op, ope);
-  parser_num(num_1, n_1);
-  parser_num(num_2, n_2);
-
-  return 0;
-};
+}
 
 int parser_num(const char* num, int* result)  {
   char* p_end;
