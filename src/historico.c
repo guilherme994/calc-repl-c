@@ -4,6 +4,7 @@
 
 void iniciar(Historico* historico) {
 	historico->total = 0;
+	historico->deu_volta = false;
 }
 
 void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, char operador) {
