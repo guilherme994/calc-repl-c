@@ -1,38 +1,71 @@
-# Calculadora CLI em C
+# calc-repl-c
 
-Calculadora de linha de comando feita como exercício de modularização em C, com headers separados e build via Makefile. Parte da minha trilha de estudos rumo a desenvolvimento de firmware/embarcados.
+Calculadora interativa em C com histórico de operações. Funciona como REPL (read-eval-print loop): você digita uma expressão, ela calcula e guarda o resultado.
 
-## Uso
+Segundo projeto da minha trilha de estudos em C com foco em firmware/embarcados. Sequência do [calc-cli-c](https://github.com/guilherme994/miniprojeto), agora com leitura de stdin, struct para representar operações e armazenamento em array fixo (sem `malloc`).
 
-```bash
-make
-./calc
-# Entrada:10 + 5
-# Saída:10 + 5 = 15
+## Demonstração
 
 ```
+$ ./calc
+> 10 + 5
+10 + 5 = 15
+> 7 x 3
+7 x 3 = 21
+> h
+10 + 5 = 15
+7 x 3 = 21
+> q
+Finalizando...
+```
 
-Operações suportadas: `+`, `-`, `x`, `/`. Uso `x` em vez de `*` para evitar expansão de glob pelo shell.
+## Comandos
 
-## Estrutura
+- `<num> <op> <num>` — executa a operação.
+- `h` — imprime o histórico de operações da sessão.
+- `q` — encerra o programa.
 
-- `main.c` — entry point, lê o teclado com `fgets`, orquestra parser, operações e historico.
-- `parser.{c,h}` — conversão de string para inteiro e identificação do operador.
-- `operacoes.{c,h}` — implementação das quatro operações aritméticas.
-- `historico.{c,h}` - implementação de struct para armazenar e imprimir os cálculos.
-- `Makefile` — build separado por unidade de compilação, com regra `clean`.
-
-## Decisões de design
-
-- **`parse_int` retorna status (`int`) e escreve resultado via ponteiro.** Padrão comum em C de sistema, permite distinguir erro de valor convertido válido.
-- **`const char *` nas funções de parser.** A função promete não modificar a string passada.
-- **Divisão por zero é checada em `main.c`, não em `operacoes.c`.** O módulo de operações é matemática pura; tratamento de erro de domínio fica na camada que tem contexto pra reagir.
+Operadores suportados: `+`, `-`, `x`, `/`. Uso `x` em vez de `*` para manter consistência com a versão CLI anterior.
 
 ## Build
 
 Requer `gcc` e `make`. Testado em Linux (Arch via WSL2).
 
-```bash
-make           # compila
-make clean     # remove artefatos
 ```
+make           # compila e gera ./calc
+make clean     # remove .o e binário
+```
+
+## Estrutura
+
+```
+calc-repl-c/
+├── include/
+│   ├── historico.h
+│   ├── operacoes.h
+│   └── parser.h
+└── src/
+    ├── main.c        — REPL loop, dispatch de comandos
+    ├── historico.c   — armazenamento e impressão do histórico
+    ├── operacoes.c   — aritmética pura
+    └── parser.c      — string → operandos + operador
+```
+
+## Decisões de design
+
+- **Histórico em array fixo (`HIST_MAX = 100`), sem `malloc`.** Quando enche, entra em loop voltando para a posição 0.
+- **`parse_int` e funções de parser retornam status via `int`, resultado via ponteiro.** Permite separar erro de valor.
+- **`const char *` nas entradas de parser.** A função promete não modificar a string original.
+- **Tratamento de divisão por zero no `main.c`.** `operacoes.c` é matemática pura; decisões de domínio (como reagir a erro) ficam na camada que tem contexto.
+
+## Limitações conhecidas
+
+- Apenas inteiros — não suporta ponto flutuante.
+- Histórico não é persistente entre execuções.
+- Apenas operações binárias simples; sem precedência ou expressões compostas.
+
+## Próximos passos possíveis
+
+- Suporte a `float`/`double`.
+- Persistir histórico em arquivo.
+- Comando `c` para limpar histórico.
