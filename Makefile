@@ -1,17 +1,19 @@
 CC := gcc
-CFLAGS := -Wall -Wextra -std=c11
+CFLAGS := -Wall -Wextra -std=c11 -Iinclude
 SRCDIR := src
+TARGET := calc
 
-calc: ./src/main.o	./src/parser.o	./src/operacoes.o	./src/historico.o
+$(TARGET): ./src/main.o	./src/parser.o	./src/operacoes.o	./src/historico.o
 	$(CC) $(CFLAGS) ./src/main.o ./src/parser.o ./src/operacoes.o ./src/historico.o -o $@
-main.o:	./src/main.c	./include/parser.h	./include/operacoes.h	./include/historico.h
+main.o:	./src/main.c
 	$(CC) $(CFLAGS) -c ./src/main.c 
-parser.o:	./include/parser.h	./src/parser.c
+parser.o:	./src/parser.c
 	$(CC) $(CFLAGS) -c ./src/parser.c
-operacoes.o:	./include/operacoes.h	./src/operacoes.c
+operacoes.o:	./src/operacoes.c
 	$(CC) $(CFLAGS) -c ./src/operacoes.c
-histocio.o :	./include/historico.h	./src/historico.c
+histocio.o :	./src/historico.c
 	$(CC) $(CFLAGS) -c ./src/historico.c
 
 clean:
-	rm -f calc *.o
+	rm -f $(TARGET)  $(SRCDIR)/*.o
+
