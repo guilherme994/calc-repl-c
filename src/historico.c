@@ -1,18 +1,15 @@
 #include "../include/historico.h"
 #include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
 
-static bool loop_memoria = false;
 
 void iniciar(Historico* historico) {
 	historico->total = 0;
 }
 
-void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, char* operador) {
+void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, char operador) {
 	if(historico->total != HISTORICO_MAX){
 		Operacao* operacao = &historico->entradas[historico->total];
-		strcpy(&operacao->operador, operador);
+		operacao->operador = operador;
 		operacao->operando_1 = n_1;
 		operacao->operando_2 = n_2;
 		operacao->resultado = resultado;
@@ -20,14 +17,14 @@ void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, 
 	}
 	else {
 		historico->total = 0;
-		loop_memoria = true;
+		historico->deu_volta = true;
 		adicionar_historico(historico, n_1, n_2, resultado, operador);
 	}
 }
 
 void imprimir_historico(Historico* historico) {
 	printf("Resultado obtido nos calculos anteriores:\n");
-	if(loop_memoria) {
+	if(historico->deu_volta) {
 		for(int i = 0; i < HISTORICO_MAX ; i++){
 			printf("%d %c %d = %d\n", historico->entradas[i].operando_1,  historico->entradas[i].operador,  historico->entradas[i].operando_2,  historico->entradas[i].resultado);
 		}

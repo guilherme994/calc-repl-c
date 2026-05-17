@@ -27,4 +27,5 @@ void parser_operator(char* op_temp, char* op)  {
   else if(!strcmp(op_temp, "-")) *op = '-';
   else if(!strcmp(op_temp, "/")) *op = '/';
   else if(!strcmp(op_temp, "x")) *op = 'x';
+  else *op = '?';
 }

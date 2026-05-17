@@ -1,7 +1,8 @@
 #ifndef HISTORICO_H
 #define HISTORICO_H
 
-#define HISTORICO_MAX 100
+#include <stdbool.h>
+#define HISTORICO_MAX 6
 
 typedef struct {
 	int operando_1;
@@ -13,10 +14,11 @@ typedef struct {
 typedef struct {
 	Operacao entradas[HISTORICO_MAX];
 	int total;
+	bool deu_volta;
 } Historico;
 
 void iniciar(Historico* historico);
-void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, char* operador); 
+void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, char operador); 
 void imprimir_historico(Historico* historico);
 
 #endif

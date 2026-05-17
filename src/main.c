@@ -12,8 +12,9 @@ int main(void) {
 
 	Historico historico;
 	iniciar(&historico);
-
+	printf("Calculadora REPL — digite 'NUM OP NUM', 'i' p/ historico, 'q' p/ sair.\n");
 	while(1) {
+		printf(">");
 		fgets(text, sizeof(text), stdin);
 		parser(text, num_1, num_2, ope);
 
@@ -28,23 +29,23 @@ int main(void) {
 				switch (op) {
 					case '+': 
 						resultado = soma(n_1, n_2);
-						adicionar_historico(&historico,n_1,n_2,resultado,&op);
+						adicionar_historico(&historico, n_1, n_2, resultado, op);
 						printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
 						break;
 					case '-': 
 						resultado = subtrai(n_1, n_2);
-						adicionar_historico(&historico,n_1,n_2,resultado,&op);
+						adicionar_historico(&historico, n_1, n_2, resultado, op);
 						printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
 						break;
 					case 'x': 
 						resultado = multiplica(n_1, n_2);
-						adicionar_historico(&historico,n_1,n_2,resultado,&op);
+						adicionar_historico(&historico, n_1, n_2, resultado, op);
 						printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
 						break;
 					case '/': 
 						if(n_2 != 0){
 							resultado = divide(n_1, n_2);	
-							adicionar_historico(&historico,n_1,n_2,resultado,&op);
+							adicionar_historico(&historico, n_1, n_2, resultado, op);
 							printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
 							break;
 						}
@@ -61,8 +62,6 @@ int main(void) {
 				printf("Os operandos inseridos nao sao validos.\n");
 			}
 		}
-		n_1 = '\0';
-		n_2 = '\0';
 		op = '\0';
 	}
 	return 0;

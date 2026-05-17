@@ -8,11 +8,13 @@ Segundo projeto da minha trilha de estudos em C com foco em firmware/embarcados.
 
 ```
 $ ./calc
+Calculadora REPL — digite 'NUM OP NUM', 'i' p/ historico, 'q' p/ sair.
 > 10 + 5
 10 + 5 = 15
 > 7 x 3
 7 x 3 = 21
 > h
+Resultado obtido nos calculos anteriores:
 10 + 5 = 15
 7 x 3 = 21
 > q
@@ -22,7 +24,7 @@ Finalizando...
 ## Comandos
 
 - `<num> <op> <num>` — executa a operação.
-- `h` — imprime o histórico de operações da sessão.
+- `i` — imprime o histórico de operações da sessão.
 - `q` — encerra o programa.
 
 Operadores suportados: `+`, `-`, `x`, `/`. Uso `x` em vez de `*` para manter consistência com a versão CLI anterior.
