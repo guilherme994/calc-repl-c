@@ -14,7 +14,7 @@ int main(void) {
 	iniciar(&historico);
 	printf("Calculadora REPL — digite 'NUM OP NUM', 'i' p/ historico, 'q' p/ sair.\n");
 	while(1) {
-		printf(">");
+		fprintf(stderr,">");
 		fgets(text, sizeof(text), stdin);
 		parser(text, num_1, num_2, ope);
 
