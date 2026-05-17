@@ -6,7 +6,6 @@
 #include <string.h>
 
 int main(void) {
-
 	char op;
 	int n_1, n_2, resultado;
 	char text [50], num_1[20], num_2[20], ope[20];
@@ -17,23 +16,54 @@ int main(void) {
 	while(1) {
 		fgets(text, sizeof(text), stdin);
 		parser(text, num_1, num_2, ope);
-//		printf("%s %s %s\n", num_1, ope, num_2);
 
-		if(!strcmp(num_1, "q")) return 0;
+		if(!strcmp(num_1, "q")) {
+			printf("Finalizando...\n");
+			return 0;
+		}
 		else if(!strcmp(num_1, "i")) imprimir_historico(&historico);	
 		else {
-			parser_num(num_1, &n_1);
-			parser_num(num_2, &n_2);
 			parser_operator(ope,&op);
-			switch (op) {
-				case '+': resultado = soma(n_1, n_2);	adicionar_historico(&historico,n_1,n_2,resultado,&op);	break;
-				case '-': resultado = subtrai(n_1, n_2);	adicionar_historico(&historico,n_1,n_2,resultado,&op);	break;
-				case 'x': resultado = multiplica(n_1, n_2);	adicionar_historico(&historico,n_1,n_2,resultado,&op);	 break;
-				case '/': resultado = divide(n_1, n_2);	adicionar_historico(&historico,n_1,n_2,resultado,&op);	break;
+			if(parser_num(num_1, &n_1) == 0 && parser_num(num_2, &n_2) == 0){
+				switch (op) {
+					case '+': 
+						resultado = soma(n_1, n_2);
+						adicionar_historico(&historico,n_1,n_2,resultado,&op);
+						printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
+						break;
+					case '-': 
+						resultado = subtrai(n_1, n_2);
+						adicionar_historico(&historico,n_1,n_2,resultado,&op);
+						printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
+						break;
+					case 'x': 
+						resultado = multiplica(n_1, n_2);
+						adicionar_historico(&historico,n_1,n_2,resultado,&op);
+						printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
+						break;
+					case '/': 
+						if(n_2 != 0){
+							resultado = divide(n_1, n_2);	
+							adicionar_historico(&historico,n_1,n_2,resultado,&op);
+							printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
+							break;
+						}
+						else{
+							printf("Para divisao o segundo operando nao pose ser igual a 0.\n");
+							break;
+						}
+					default:
+						printf("O operador inserido nao e valido.\nDeve conter o seguinte formato 'NUMERO' espaco 'OPERADOR' espaco 'NUMERO'.\nOperadores validos '+', '-', '/', 'x'.\n");
+						break;
+				}
 			}
-
-			printf("%d %c %d = %d\n", n_1, op, n_2, resultado);
+			else {
+				printf("Os operandos inseridos nao sao validos.\n");
+			}
 		}
+		n_1 = '\0';
+		n_2 = '\0';
+		op = '\0';
 	}
 	return 0;
 }

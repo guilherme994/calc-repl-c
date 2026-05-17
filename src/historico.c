@@ -16,6 +16,7 @@ void adicionar_historico(Historico* historico, int n_1, int n_2, int resultado, 
 }
 
 void imprimir_historico(Historico* historico) {
+	printf("Resultado obtido nos calculos anteriores:\n");
 	for(int i = 0; i < historico->total ; i++){
 		printf("%d %c %d = %d\n", historico->entradas[i].operando_1,  historico->entradas[i].operador,  historico->entradas[i].operando_2,  historico->entradas[i].resultado);
 	}
